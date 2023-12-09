@@ -5,30 +5,6 @@ local UI = {
 }
 
 
-
-
---[[
-For support join my discord: https://discord.gg/Z9Mxu72zZ6
-
-
-PRESETS:
-Bottom of screen
-x = 0.000,
-y = 0.43,
-
-Bottom right of screen
-x = 0.3,
-y = 0.43,
-
-Top of screen
-x = 0.000,
-y = -0.43,
-
-
-
-DO NOT EDIT ANYTHING BELOW THIS IF YOU DON'T KNOW WHAT YOU'RE DOING!
-]]--
-
 function Text(text, x, y, scale)
     SetTextFont(4)
     SetTextProportional(0)
@@ -165,5 +141,3 @@ Citizen.CreateThread(function()
 		end
 	end
 end)
-
-print("This resource is created by Andyyy#7666 if you find any buggs or need support please let me know on discord: https://discord.gg/Z9Mxu72zZ6")
