@@ -1,4 +1,3 @@
--- Config here
 local UI = { 
 	x = 0.3,
 	y = 0.43,
@@ -24,15 +23,15 @@ Citizen.CreateThread(function()
 
 		local Ped = GetPlayerPed(-1)
 		local Heli = IsPedInAnyHeli(Ped)
-		local PedVehicle = GetVehiclePedIsIn(GetPlayerPed(-1),false)
-		local HeliSpeed = GetEntitySpeed(GetVehiclePedIsIn(GetPlayerPed(-1), false)) * 2.24
-		local Engine = GetIsVehicleEngineRunning(PedVehicle)
-		local Height = GetEntityHeightAboveGround(PedVehicle)
-		local MainRotorHealth = GetHeliMainRotorHealth(PedVehicle)
-		local TailRotorHealth = GetHeliTailRotorHealth(PedVehicle)
 
 		if Heli then
-			-- engine display
+			local PedVehicle = GetVehiclePedIsIn(GetPlayerPed(-1),false)
+			local HeliSpeed = GetEntitySpeed(GetVehiclePedIsIn(GetPlayerPed(-1), false)) * 2.24
+			local Engine = GetIsVehicleEngineRunning(PedVehicle)
+			local Height = GetEntityHeightAboveGround(PedVehicle)
+			local MainRotorHealth = GetHeliMainRotorHealth(PedVehicle)
+			local TailRotorHealth = GetHeliTailRotorHealth(PedVehicle)
+
 			if Engine then
 				Text("~g~ENG", UI.x + 0.4016, UI.y + 0.476, 0.55)
 				Text("~g~__", UI.x + 0.4016, UI.y + 0.47, 0.79)
@@ -41,7 +40,6 @@ Citizen.CreateThread(function()
 				Text("~r~__", UI.x + 0.4016, UI.y + 0.47, 0.79)
 			end
 
-			-- Main rotor display
 			if MainRotorHealth > 800 and Engine then
 				Text("~g~MAIN", UI.x + 0.4516, UI.y + 0.476, 0.55)
 				Text("~g~__", UI.x + 0.4516, UI.y + 0.47, 0.79)
@@ -56,7 +54,6 @@ Citizen.CreateThread(function()
 				Text("~r~__", UI.x + 0.4516, UI.y + 0.47, 0.79)
 			end
 
-			-- Tail rotor display
 			if TailRotorHealth > 300 and Engine then
 				Text("~g~TAIL", UI.x + 0.5, UI.y + 0.476, 0.55)
 				Text("~g~__", UI.x + 0.5, UI.y + 0.47, 0.79)
@@ -71,7 +68,6 @@ Citizen.CreateThread(function()
 				Text("~r~__", UI.x + 0.5, UI.y + 0.47, 0.79)
 			end
 
-			-- Altitude and speed display
 			Text(math.ceil(Height), UI.x + 0.549, UI.y + 0.476, 0.45)
 			Text("ALTITUDE", UI.x + 0.549, UI.y + 0.502, 0.29)
 
@@ -84,18 +80,15 @@ Citizen.CreateThread(function()
 				Text("0", UI.x + 0.598, UI.y + 0.476, 0.45)
 			end
 
-			-- Big rectangels on the ui
 			DrawRect(UI.x + 0.5, UI.y + 0.5, 0.255, 0.085, 25, 25, 25, 255)
 			DrawRect(UI.x + 0.5, UI.y + 0.5, 0.25, 0.075, 51, 51, 51, 255)
 
-			-- Smaller squares in the rectangels.
 			DrawRect(UI.x + 0.402, UI.y + 0.5, 0.040, 0.050, 25, 25, 25, 255)
 			DrawRect(UI.x + 0.4516, UI.y + 0.5, 0.040, 0.050, 25, 25, 25, 255)
 			DrawRect(UI.x + 0.5, UI.y + 0.5, 0.040, 0.050, 25, 25, 25, 255)
 			DrawRect(UI.x + 0.549, UI.y + 0.5, 0.040, 0.050, 25, 25, 25, 255)
 			DrawRect(UI.x + 0.598, UI.y + 0.5, 0.040, 0.050, 25, 25, 25, 255)
 
-			-- Slows down helicopter on landing and takeoff but not if it's flying fast close to the ground.
 			if HeliSpeed > 15.0 and Height < 30.0 then
 				SetEntityMaxSpeed(PedVehicle, 300.0)
 			elseif HeliSpeed > 15.0 and Height < 10.0 then
@@ -124,16 +117,13 @@ end)
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(1)
-
 		local Ped = GetPlayerPed(-1)
 		local Heli = IsPedInAnyHeli(Ped)
-		local PedVehicle = GetVehiclePedIsIn(GetPlayerPed(-1),false)
-		local HeliSpeed = GetEntitySpeed(GetVehiclePedIsIn(GetPlayerPed(-1), false)) * 2.24
-		local Engine = GetIsVehicleEngineRunning(PedVehicle)
-		local Height = GetEntityHeightAboveGround(PedVehicle)
-
-		-- Shuts down engine 5 seconds after landing.
 		if Heli then
+			local PedVehicle = GetVehiclePedIsIn(GetPlayerPed(-1),false)
+			local HeliSpeed = GetEntitySpeed(GetVehiclePedIsIn(GetPlayerPed(-1), false)) * 2.24
+			local Engine = GetIsVehicleEngineRunning(PedVehicle)
+			local Height = GetEntityHeightAboveGround(PedVehicle)
 			if Height < 3.0 and HeliSpeed == 0 and Engine then
 				Citizen.Wait(5000)
 				SetVehicleEngineOn(PedVehicle, false, true, true)
